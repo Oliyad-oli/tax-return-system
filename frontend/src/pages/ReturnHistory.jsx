@@ -49,10 +49,31 @@ function ReturnHistory() {
           <thead className="bg-blue-900 text-white">
 
             <tr>
-              <th className="p-4">Invoice</th>
-              <th className="p-4">Amount</th>
-              <th className="p-4">Description</th>
-              <th className="p-4">Date</th>
+
+              <th className="p-4 text-left">
+                Invoice
+              </th>
+
+              <th className="p-4 text-left">
+                Amount
+              </th>
+
+              <th className="p-4 text-left">
+                Status
+              </th>
+
+              <th className="p-4 text-left">
+                Notification
+              </th>
+
+              <th className="p-4 text-left">
+                Validation
+              </th>
+
+              <th className="p-4 text-left">
+                Date
+              </th>
+
             </tr>
 
           </thead>
@@ -63,7 +84,7 @@ function ReturnHistory() {
 
               <tr
                 key={item.id}
-                className="border-b"
+                className="border-b hover:bg-gray-50"
               >
 
                 <td className="p-4">
@@ -75,7 +96,43 @@ function ReturnHistory() {
                 </td>
 
                 <td className="p-4">
-                  {item.description}
+
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm text-white
+                    ${
+                      item.status === "APPROVED"
+                        ? "bg-green-600"
+                        : item.status === "FLAGGED"
+                        ? "bg-yellow-500"
+                        : "bg-red-600"
+                    }`}
+                  >
+                    {item.status}
+                  </span>
+
+                </td>
+
+                <td className="p-4">
+                  {item.notificationMessage}
+                </td>
+
+                <td className="p-4">
+
+                  <span
+                    className={`font-semibold
+                    ${
+                      item.invoiceValidated
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }`}
+                  >
+                    {
+                      item.invoiceValidated
+                        ? "VALID"
+                        : "INVALID"
+                    }
+                  </span>
+
                 </td>
 
                 <td className="p-4">

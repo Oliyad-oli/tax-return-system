@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -33,6 +34,22 @@ public class DailyReturn {
     private String attachmentName;
 
     private LocalDate submissionDate;
+
+    private Boolean manualEntry;
+
+    private String status;
+
+    private String notificationMessage;
+
+    private Boolean invoiceValidated;
+
+    private Boolean inspectionRequired;
+
+    private String validationMessage;
+
+    private String riskLevel;
+
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
