@@ -34,8 +34,14 @@ function Login() {
 
       alert("Login Successful");
 
-      navigate("/dashboard");
+if (res.data.role === "ADMIN") {
 
+  navigate("/admin");
+
+} else {
+
+  navigate("/dashboard");
+}
     } catch (error) {
 
       alert("Login Failed");

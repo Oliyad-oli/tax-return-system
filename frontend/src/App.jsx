@@ -9,10 +9,12 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import DailyReturn from "./pages/DailyReturn";
 import ReturnHistory from "./pages/ReturnHistory";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
 
   return (
+
     <BrowserRouter>
 
       <Routes>
@@ -38,8 +40,13 @@ function App() {
         />
 
         <Route
-          path="/return-history"
+          path="/history"
           element={<ReturnHistory />}
+        />
+
+        <Route
+          path="/admin"
+          element={<AdminDashboard />}
         />
 
       </Routes>

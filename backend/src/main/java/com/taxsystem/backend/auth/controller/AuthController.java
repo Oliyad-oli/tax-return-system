@@ -2,6 +2,7 @@ package com.taxsystem.backend.auth.controller;
 
 import com.taxsystem.backend.auth.domain.User;
 import com.taxsystem.backend.auth.dto.LoginRequest;
+import com.taxsystem.backend.auth.dto.RegisterRequest;
 import com.taxsystem.backend.auth.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,18 +18,26 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public User signup(
-            @RequestBody User user
+    public String register(
+
+            @RequestBody
+            RegisterRequest request
     ) {
 
-        return authService.signup(user);
+        return authService.register(
+                request
+        );
     }
 
     @PostMapping("/login")
     public User login(
-            @RequestBody LoginRequest request
+
+            @RequestBody
+            LoginRequest request
     ) {
 
-        return authService.login(request);
+        return authService.login(
+                request
+        );
     }
 }
