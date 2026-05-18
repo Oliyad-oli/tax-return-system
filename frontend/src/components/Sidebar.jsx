@@ -1,58 +1,162 @@
-import { Link } from "react-router-dom";
+import {
+  NavLink
+} from "react-router-dom";
 
-function Sidebar() {
-
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
+function Sidebar({ isAdmin }) {
 
   return (
 
-    <div className="w-64 bg-blue-950 text-white min-h-screen p-5">
+    <div className="w-64 bg-gray-900 text-white min-h-screen p-5">
 
-      <h1 className="text-2xl font-bold mb-10">
+      <h1 className="text-2xl font-bold mb-8">
         TAX SYSTEM
       </h1>
 
-      <ul className="space-y-4">
+      <div className="space-y-3">
 
-        <li>
-          <Link to="/dashboard">
-            Dashboard
-          </Link>
-        </li>
+        {/* TAXPAYER MENUS (Visible only to non-admin users) */}
+        {!isAdmin && (
+          <>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              📊 Dashboard
+            </NavLink>
 
-        {
-          user?.role === "TAXPAYER" && (
-            <>
-              <li>
-                <Link to="/daily-return">
-                  Register Return
-                </Link>
-              </li>
+            <NavLink
+              to="/daily-return"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              📝 Submit Return
+            </NavLink>
 
-              <li>
-                <Link to="/history">
-                  Return History
-                </Link>
-              </li>
-            </>
-          )
-        }
+            <NavLink
+              to="/history"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              📜 Return History
+            </NavLink>
 
-        {
-          user?.role === "ADMIN" && (
-            <>
-              <li>
-                <Link to="/admin">
-                  Admin Dashboard
-                </Link>
-              </li>
-            </>
-          )
-        }
+            {/* Messages for Taxpayers - to communicate with Admin */}
+            <NavLink
+              to="/messages"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              💬 Messages
+            </NavLink>
+          </>
+        )}
 
-      </ul>
+        {/* ADMIN MENUS (Visible only to admin users) */}
+        {isAdmin && (
+          <>
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              🛡️ Admin Dashboard
+            </NavLink>
+
+            <NavLink
+              to="/manage-taxpayers"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              👥 Manage Taxpayers
+            </NavLink>
+
+            <NavLink
+              to="/all-returns"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              📑 All Returns
+            </NavLink>
+
+            <NavLink
+              to="/messages"
+              className={({ isActive }) =>
+                `block p-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-600"
+                    : "hover:bg-gray-800"
+                }`
+              }
+            >
+              💬 Messages
+            </NavLink>
+          </>
+        )}
+
+        {/* COMMON MENUS (Visible to both Admin and Taxpayer) */}
+        <NavLink
+          to="/notifications"
+          className={({ isActive }) =>
+            `block p-3 rounded-xl transition ${
+              isActive
+                ? "bg-blue-600"
+                : "hover:bg-gray-800"
+            }`
+          }
+        >
+          🔔 Notifications
+        </NavLink>
+
+        <NavLink
+          to="/settings"
+          className={({ isActive }) =>
+            `block p-3 rounded-xl transition ${
+              isActive
+                ? "bg-blue-600"
+                : "hover:bg-gray-800"
+            }`
+          }
+        >
+          ⚙️ Settings
+        </NavLink>
+
+      </div>
 
     </div>
   );

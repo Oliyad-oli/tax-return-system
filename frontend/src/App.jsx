@@ -10,47 +10,24 @@ import Dashboard from "./pages/Dashboard";
 import DailyReturn from "./pages/DailyReturn";
 import ReturnHistory from "./pages/ReturnHistory";
 import AdminDashboard from "./pages/AdminDashboard";
+import Notification from "./pages/Notification";
+import Messages from "./pages/Messages";
+import Settings from "./pages/Settings";
 
 function App() {
-
   return (
-
     <BrowserRouter>
-
       <Routes>
-
-        <Route
-          path="/"
-          element={<Login />}
-        />
-
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
-
-        <Route
-          path="/daily-return"
-          element={<DailyReturn />}
-        />
-
-        <Route
-          path="/history"
-          element={<ReturnHistory />}
-        />
-
-        <Route
-          path="/admin"
-          element={<AdminDashboard />}
-        />
-
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/daily-return" element={<DailyReturn />} />
+        <Route path="/history" element={<ReturnHistory />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/notifications" element={<Notification />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
-
     </BrowserRouter>
   );
 }
