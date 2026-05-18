@@ -67,22 +67,22 @@ public class DailyReturnService {
             validationMessage = "Manual Entry Detected - Awaiting Admin Review";
         }
 
-        DailyReturn dailyReturn = DailyReturn.builder()
-                .invoiceNumber(request.getInvoiceNumber())
-                .amount(request.getAmount())
-                .description(request.getDescription())
-                .attachmentName(request.getAttachmentName())
-                .submissionDate(LocalDate.now())
-                .manualEntry(request.getManualEntry())
-                .status(status)
-                .notificationMessage(notification)
-                .invoiceValidated(validated)
-                .inspectionRequired(inspectionRequired)
-                .validationMessage(validationMessage)
-                .riskLevel(riskLevel)
-                .createdAt(LocalDateTime.now())
-                .user(user)
-                .build();
+        // Create DailyReturn without builder
+        DailyReturn dailyReturn = new DailyReturn();
+        dailyReturn.setInvoiceNumber(request.getInvoiceNumber());
+        dailyReturn.setAmount(request.getAmount());
+        dailyReturn.setDescription(request.getDescription());
+        dailyReturn.setAttachmentName(request.getAttachmentName());
+        dailyReturn.setSubmissionDate(LocalDate.now());
+        dailyReturn.setManualEntry(request.getManualEntry());
+        dailyReturn.setStatus(status);
+        dailyReturn.setNotificationMessage(notification);
+        dailyReturn.setInvoiceValidated(validated);
+        dailyReturn.setInspectionRequired(inspectionRequired);
+        dailyReturn.setValidationMessage(validationMessage);
+        dailyReturn.setRiskLevel(riskLevel);
+        dailyReturn.setCreatedAt(LocalDateTime.now());
+        dailyReturn.setUser(user);
 
         dailyReturnRepository.save(dailyReturn);
         

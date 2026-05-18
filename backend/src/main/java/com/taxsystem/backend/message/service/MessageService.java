@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class MessageService {
         message.setSubject(request.getSubject());
         message.setContent(request.getContent());
         message.setRead(false);
+        message.setCreatedAt(LocalDateTime.now());
         
         Message savedMessage = messageRepository.save(message);
         
@@ -76,6 +78,7 @@ public class MessageService {
         replyMessage.setContent(reply.getContent());
         replyMessage.setParentMessage(parentMessage);
         replyMessage.setRead(false);
+        replyMessage.setCreatedAt(LocalDateTime.now());
         
         Message savedReply = messageRepository.save(replyMessage);
         

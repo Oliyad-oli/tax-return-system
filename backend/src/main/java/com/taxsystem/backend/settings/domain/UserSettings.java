@@ -1,47 +1,53 @@
 package com.taxsystem.backend.settings.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_settings")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class UserSettings {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(unique = true, nullable = false)
     private String email;
+    private String theme;
+    private String language;
+    private Boolean emailNotifications;
+    private Boolean smsNotifications;
+    private Boolean twoFactorEnabled;
+    private Integer sessionTimeoutMinutes;
+    private Boolean autoLogout;
+    private LocalDateTime updatedAt;
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     
-    @Builder.Default
-    private String theme = "light";
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
     
-    @Builder.Default
-    private String language = "en";
+    public String getTheme() { return theme; }
+    public void setTheme(String theme) { this.theme = theme; }
     
-    @Builder.Default
-    private Boolean emailNotifications = true;
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
     
-    @Builder.Default
-    private Boolean smsNotifications = false;
+    public Boolean getEmailNotifications() { return emailNotifications; }
+    public void setEmailNotifications(Boolean emailNotifications) { this.emailNotifications = emailNotifications; }
     
-    @Builder.Default
-    private Boolean twoFactorEnabled = false;
+    public Boolean getSmsNotifications() { return smsNotifications; }
+    public void setSmsNotifications(Boolean smsNotifications) { this.smsNotifications = smsNotifications; }
     
-    @Builder.Default
-    private Integer sessionTimeoutMinutes = 30;
+    public Boolean getTwoFactorEnabled() { return twoFactorEnabled; }
+    public void setTwoFactorEnabled(Boolean twoFactorEnabled) { this.twoFactorEnabled = twoFactorEnabled; }
     
-    @Builder.Default
-    private Boolean autoLogout = true;
+    public Integer getSessionTimeoutMinutes() { return sessionTimeoutMinutes; }
+    public void setSessionTimeoutMinutes(Integer sessionTimeoutMinutes) { this.sessionTimeoutMinutes = sessionTimeoutMinutes; }
     
-    @Builder.Default
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    public Boolean getAutoLogout() { return autoLogout; }
+    public void setAutoLogout(Boolean autoLogout) { this.autoLogout = autoLogout; }
+    
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
