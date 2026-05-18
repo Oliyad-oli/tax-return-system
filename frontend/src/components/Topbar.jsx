@@ -1,30 +1,41 @@
+import { useNavigate } from "react-router-dom";
+import NotificationBadge from "./NotificationBadge";
+import MessageBadge from "./MessageBadge";
+
 function Topbar() {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
-
-  const logout = () => {
-
+  const handleLogout = () => {
     localStorage.removeItem("user");
-
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
-    <div className="bg-white shadow p-4 flex justify-between">
-
-      <h1 className="text-2xl font-bold">
-        Welcome, {user?.fullName}
+    <div className="bg-white shadow-md p-4 flex justify-between items-center">
+      <h1 className="text-xl font-semibold">
+        Welcome, {user?.fullName || user?.email}
       </h1>
-
-      <button
-        onClick={logout}
-        className="bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Logout
-      </button>
-
+      <div className="flex items-center gap-4">
+        <div className="relative">
+          <button className="text-gray-600 hover:text-gray-800 text-2xl">
+            🔔
+          </button>
+          <NotificationBadge />
+        </div>
+        <div className="relative">
+          <button className="text-gray-600 hover:text-gray-800 text-2xl">
+            💬
+          </button>
+          <MessageBadge />
+        </div>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

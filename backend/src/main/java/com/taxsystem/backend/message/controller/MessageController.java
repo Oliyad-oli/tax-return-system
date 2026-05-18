@@ -17,7 +17,7 @@ import java.util.Map;
 public class MessageController {
     
     private final MessageService messageService;
-    
+
     @PostMapping("/send")
     public Message sendMessage(@RequestBody MessageDTO request) {
         return messageService.sendMessage(request);

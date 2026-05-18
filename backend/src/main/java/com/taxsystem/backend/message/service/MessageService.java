@@ -19,21 +19,19 @@ public class MessageService {
     
     @Transactional
     public Message sendMessage(MessageDTO request) {
-        Message message = Message.builder()
-                .senderEmail(request.getSenderEmail())
-                .receiverEmail(request.getReceiverEmail())
-                .subject(request.getSubject())
-                .content(request.getContent())
-                .isRead(false)
-                .build();
+        Message message = new Message();
+        message.setSenderEmail(request.getSenderEmail());
+        message.setReceiverEmail(request.getReceiverEmail());
+        message.setSubject(request.getSubject());
+        message.setContent(request.getContent());
+        message.setRead(false);
         
         Message savedMessage = messageRepository.save(message);
         
-        // Send notification to receiver
         notificationService.createNotification(
-                request.getReceiverEmail(),
-                "📧 New Message: " + request.getSubject(),
-                "You have received a new message from " + request.getSenderEmail()
+            request.getReceiverEmail(),
+            "New Message: " + request.getSubject(),
+            "You have received a new message from " + request.getSenderEmail()
         );
         
         return savedMessage;
@@ -53,8 +51,7 @@ public class MessageService {
     
     @Transactional
     public void markAsRead(Long messageId) {
-        Message message = messageRepository.findById(messageId)
-                .orElseThrow(() -> new RuntimeException("Message not found"));
+        Message message = messageRepository.findById(messageId).orElseThrow();
         message.setRead(true);
         messageRepository.save(message);
     }
@@ -70,24 +67,22 @@ public class MessageService {
     
     @Transactional
     public Message replyToMessage(Long parentId, MessageDTO reply) {
-        Message parentMessage = messageRepository.findById(parentId)
-                .orElseThrow(() -> new RuntimeException("Original message not found"));
+        Message parentMessage = messageRepository.findById(parentId).orElseThrow();
         
-        Message replyMessage = Message.builder()
-                .senderEmail(reply.getSenderEmail())
-                .receiverEmail(parentMessage.getSenderEmail())
-                .subject("RE: " + parentMessage.getSubject())
-                .content(reply.getContent())
-                .parentMessage(parentMessage)
-                .isRead(false)
-                .build();
+        Message replyMessage = new Message();
+        replyMessage.setSenderEmail(reply.getSenderEmail());
+        replyMessage.setReceiverEmail(parentMessage.getSenderEmail());
+        replyMessage.setSubject("RE: " + parentMessage.getSubject());
+        replyMessage.setContent(reply.getContent());
+        replyMessage.setParentMessage(parentMessage);
+        replyMessage.setRead(false);
         
         Message savedReply = messageRepository.save(replyMessage);
         
         notificationService.createNotification(
-                parentMessage.getSenderEmail(),
-                "📧 Reply to: " + parentMessage.getSubject(),
-                "You have received a reply from " + reply.getSenderEmail()
+            parentMessage.getSenderEmail(),
+            "Reply to: " + parentMessage.getSubject(),
+            "You have received a reply from " + reply.getSenderEmail()
         );
         
         return savedReply;

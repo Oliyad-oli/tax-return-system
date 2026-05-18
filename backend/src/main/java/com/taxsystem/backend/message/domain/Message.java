@@ -2,6 +2,7 @@ package com.taxsystem.backend.message.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,16 +18,9 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false)
     private String senderEmail;
-    
-    @Column(nullable = false)
     private String receiverEmail;
-    
-    @Column(nullable = false)
     private String subject;
-    
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
     
     @Builder.Default

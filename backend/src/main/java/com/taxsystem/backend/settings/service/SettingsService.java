@@ -19,17 +19,16 @@ public class SettingsService {
     public UserSettings getOrCreateSettings(String email) {
         return settingsRepository.findByEmail(email)
                 .orElseGet(() -> {
-                    UserSettings newSettings = UserSettings.builder()
-                            .email(email)
-                            .theme("light")
-                            .language("en")
-                            .emailNotifications(true)
-                            .smsNotifications(false)
-                            .twoFactorEnabled(false)
-                            .sessionTimeoutMinutes(30)
-                            .autoLogout(true)
-                            .updatedAt(LocalDateTime.now())
-                            .build();
+                    UserSettings newSettings = new UserSettings();
+                    newSettings.setEmail(email);
+                    newSettings.setTheme("light");
+                    newSettings.setLanguage("en");
+                    newSettings.setEmailNotifications(true);
+                    newSettings.setSmsNotifications(false);
+                    newSettings.setTwoFactorEnabled(false);
+                    newSettings.setSessionTimeoutMinutes(30);
+                    newSettings.setAutoLogout(true);
+                    newSettings.setUpdatedAt(LocalDateTime.now());
                     return settingsRepository.save(newSettings);
                 });
     }

@@ -2,6 +2,7 @@ package com.taxsystem.backend.settings.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity

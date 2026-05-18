@@ -18,9 +18,7 @@ public class Notification {
     private Long id;
 
     private String email;
-
     private String title;
-
     private String message;
 
     @Builder.Default
