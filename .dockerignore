@@ -1,0 +1,32 @@
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Build
+target/
+dist/
+node_modules/
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+**/test/
+**/tests/
+**/__tests__/
+
+# Temp files
+*.tmp
+*.temp

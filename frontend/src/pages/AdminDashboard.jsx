@@ -14,13 +14,6 @@ function AdminDashboard() {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchStats();
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchStats, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
   const fetchStats = async () => {
     try {
       const res = await axios.get("http://localhost:8080/api/admin/dashboard-stats");
@@ -31,6 +24,13 @@ function AdminDashboard() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchStats();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchStats, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (loading) {
     return (
