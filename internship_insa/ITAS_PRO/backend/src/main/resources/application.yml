@@ -1,0 +1,136 @@
+spring:
+  application:
+    name: itas-backend
+  threads:
+    virtual:
+      enabled: true  # Java 21 virtual threads for scalability
+  jpa:
+    hibernate:
+      ddl-auto: update  # Auto-create schema for development (no Flyway for now)
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:itas_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  flyway:
+    enabled: false  # Disable Flyway for now
+  data:
+    redis:
+      repositories:
+        enabled: false  # Disable Redis for now
+  kafka:
+    enabled: false  # Disable Kafka for now
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api/v1
+  error:
+    include-message: always
+    include-binding-errors: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  level:
+    root: INFO
+    com.act.itas: DEBUG
+    org.springframework.web: INFO
+    org.springframework.data: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %X{traceId} %X{correlationId} %X{actorId} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %X{traceId} %X{correlationId} %X{actorId} - %msg%n"
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 100
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30000
+        permittedNumberOfCallsInHalfOpenState: 10
+    instances:
+      kafka-producer:
+        baseConfig: default
+      redis-cache:
+        baseConfig: default
+      minio-storage:
+        baseConfig: default
+      elasticsearch:
+        baseConfig: default
+      email-service:
+        baseConfig: default
+      sms-service:
+        baseConfig: default
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 1000
+        retryExceptions:
+          - java.net.ConnectException
+          - java.io.IOException
+
+springdoc:
+  api-docs:
+    path: /openapi
+  swagger-ui:
+    path: /swagger-ui.html
+    use-root-path: true
+
+# ─── ITAS Custom Configuration ──────────────────────────────────────────────
+itas:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:itas-super-secret-key-for-development-only-change-in-production-minimum-256-bits}
+      expiration-ms: 3600000  # 1 hour
+      refresh-expiration-ms: 604800000  # 7 days
+    keycloak:
+      enabled: false  # Disabled for now
+  messaging:
+    sms:
+      provider: mock  # Mock SMS provider
+      api-key: ""
+      sender-id: ITAS
+  websocket:
+    enabled: false  # Disabled for now
+  dashboard:
+    refresh-interval-ms: 5000
+  scheduler:
+    enabled: false  # Disabled for now
